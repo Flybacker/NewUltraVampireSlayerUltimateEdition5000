@@ -5,10 +5,10 @@ public class Movement : MonoBehaviour
 {
 
     [SerializeField] Rigidbody2D playerRB;
-    [SerializeField] float playerSpeed;
-    [SerializeField] float jumpPower;
     [SerializeField] Collider2D groundCheck;
 
+    [SerializeField] float playerSpeed;
+    [SerializeField] float jumpPower;
 
     InputAction movementAction;
     InputAction jumpAction;
@@ -27,16 +27,15 @@ public class Movement : MonoBehaviour
     {
         checkGrounded();
         checkMovement();
-        Debug.Log(grounded);
     }
 
     void checkMovement()
     {
-        if ((jumpAction.IsPressed() == true) && grounded)
+        if (jumpAction.IsPressed() && grounded)
         {
             playerRB.linearVelocityY = jumpPower;
         }
-        else if ((jumpAction.WasPerformedThisFrame() == true) && canDash)
+        else if (jumpAction.WasPerformedThisFrame() && canDash)
         {
             canDash = false;
             dash();
