@@ -1,5 +1,5 @@
-using Mono.Cecil;
 using System.Collections;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,9 +9,12 @@ public class Movement : MonoBehaviour
     [SerializeField] Rigidbody2D playerRB;
     [SerializeField] Collider2D groundCheck;
 
+    [SerializeField] SpriteRenderer spriteRenderer;
+
     [SerializeField] float playerSpeed;
     [SerializeField] float jumpPower;
     [SerializeField] float dashPower;
+    [SerializeField] float coyoteTime;
 
     [SerializeField] GameObject bullet;
 
@@ -22,6 +25,8 @@ public class Movement : MonoBehaviour
     bool canDash;
     bool grounded;
     bool inDash;
+
+    float coyoteTimer;
 
     float defaultGravity;
 
@@ -43,6 +48,7 @@ public class Movement : MonoBehaviour
         checkMovement();
         gunFire();
         fireCooldown -= Time.deltaTime;
+        coyoteTimer -= Time.deltaTime;
     }
 
 
@@ -65,6 +71,7 @@ public class Movement : MonoBehaviour
         if (jumpAction.IsPressed() && grounded)
         {
             playerRB.linearVelocityY = jumpPower;
+            coyoteTimer = 0;
         }
         else if (jumpAction.WasPerformedThisFrame() && canDash)
         {
@@ -86,23 +93,47 @@ public class Movement : MonoBehaviour
         inDash = true;
         playerRB.gravityScale = 0;
         playerRB.linearVelocityY = 0;
-        playerRB.linearVelocityX = movementAction.ReadValue<Vector2>().x * dashPower;
+        playerRB.linearVelocityX = 0;
+        spriteRenderer.color = Color.red;
+        yield return new WaitForSeconds(0.2f);
+        spriteRenderer.color = Color.hotPink;
+        if (movementAction.ReadValue<Vector2>().x != 0)
+        {
+            playerRB.linearVelocityX = movementAction.ReadValue<Vector2>().x * dashPower;
+        }
+        else if (movementAction.ReadValue<Vector2>().x == 0)
+        {
+            playerRB.linearVelocityX = lastDirection * dashPower;
+        }
+        Time.timeScale = 0.30f;
         if (Mathf.Abs(playerRB.linearVelocityX) > 1)
         {
             yield return new WaitForSeconds(0.05f);
         }
+        Time.timeScale = 1f;
         playerRB.gravityScale = defaultGravity;
+        spriteRenderer.color = Color.white;
         inDash = false;
     }
 
 
     void checkGrounded()
     {
-        grounded = groundCheck.IsTouchingLayers(1 << 3);
+        bool currentlyGrounded = groundCheck.IsTouchingLayers(1 << 3);
 
-        if (grounded)
+        if (currentlyGrounded)
         {
             canDash = true;
+            coyoteTimer = coyoteTime;
+            grounded = true;
+        }
+        else if (coyoteTimer > 0)
+        {
+            grounded = true;
+        }
+        else
+        {
+            grounded = false;
         }
     }
 }

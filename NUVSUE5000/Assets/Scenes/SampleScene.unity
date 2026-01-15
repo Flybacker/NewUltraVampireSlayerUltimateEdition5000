@@ -1344,9 +1344,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Movement
   playerRB: {fileID: 1657135304}
   groundCheck: {fileID: 2008950460}
+  spriteRenderer: {fileID: 1657135306}
   playerSpeed: 5
   jumpPower: 15
   dashPower: 100
+  coyoteTime: 1
   bullet: {fileID: 7535325949922793354, guid: 0d12a7909e2be6c4da855f8caf7fe11a, type: 3}
 --- !u!1 &1821152460
 GameObject:

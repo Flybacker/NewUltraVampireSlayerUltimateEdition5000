@@ -11,8 +11,11 @@ public class BulletScript : MonoBehaviour
 
     [SerializeField] ParticleSystem crashParticle;
     [SerializeField] ParticleSystem trailParticle;
+
+    bool isActive;
     void Start()
     {
+        isActive = true;
         DamageHitbox = GetComponent<Collider2D>();
         sprite = GetComponent<SpriteRenderer>();
 
@@ -22,7 +25,10 @@ public class BulletScript : MonoBehaviour
 
     private void Update()
     {
-        transform.position += transform.right * 25 * Time.deltaTime;
+        if (isActive)
+        {
+            transform.position += transform.right * 25 * Time.deltaTime;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -31,6 +37,7 @@ public class BulletScript : MonoBehaviour
         {
             DamageHitbox.enabled = false;
             sprite.enabled = false;
+            isActive = false;
             trailParticle.Stop();
             crashParticle.Play();
             StartCoroutine(timer());
