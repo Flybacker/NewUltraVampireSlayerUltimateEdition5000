@@ -1174,7 +1174,7 @@ GameObject:
   - component: {fileID: 1657135306}
   - component: {fileID: 1657135308}
   - component: {fileID: 1657135304}
-  - component: {fileID: 1657135309}
+  - component: {fileID: 1657135310}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1330,7 +1330,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 2}
   m_EdgeRadius: 0
---- !u!114 &1657135309
+--- !u!114 &1657135310
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1339,7 +1339,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1657135303}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca4cec21310eeb544a1b7850cedf747e, type: 3}
+  m_Script: {fileID: 11500000, guid: d724e8ab9e074c34ba6f851654bf877e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Movement
   playerRB: {fileID: 1657135304}
