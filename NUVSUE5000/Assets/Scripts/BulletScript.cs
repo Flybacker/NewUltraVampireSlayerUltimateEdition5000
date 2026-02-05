@@ -10,7 +10,6 @@ public class BulletScript : MonoBehaviour
     [SerializeField] LayerMask layers;
 
     [SerializeField] ParticleSystem crashParticle;
-    [SerializeField] ParticleSystem trailParticle;
 
     bool isActive;
     void Start()
@@ -38,7 +37,6 @@ public class BulletScript : MonoBehaviour
             DamageHitbox.enabled = false;
             sprite.enabled = false;
             isActive = false;
-            trailParticle.Stop();
             crashParticle.Play();
             StartCoroutine(timer());
         }

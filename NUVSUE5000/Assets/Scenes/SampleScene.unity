@@ -1175,6 +1175,7 @@ GameObject:
   - component: {fileID: 1657135308}
   - component: {fileID: 1657135304}
   - component: {fileID: 1657135310}
+  - component: {fileID: 1657135311}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1345,11 +1346,44 @@ MonoBehaviour:
   playerRB: {fileID: 1657135304}
   groundCheck: {fileID: 2008950460}
   spriteRenderer: {fileID: 1657135306}
+  bullet: {fileID: 7535325949922793354, guid: 0d12a7909e2be6c4da855f8caf7fe11a, type: 3}
+  PlayerWalkingSmoke: {fileID: 6850037120543995028, guid: 8cb1617fd8d04c043a11f9d2774c4881, type: 3}
+  PlayerJumpSmoke: {fileID: 8389711017444011259, guid: e654168417273ba49a5b93c24fbed4e5, type: 3}
+  PlayerDashParticle: {fileID: 5079925222754897069, guid: e08aa2773532e4548a9e1606353b429d, type: 3}
   playerSpeed: 5
   jumpPower: 15
   dashPower: 100
   coyoteTime: 1
-  bullet: {fileID: 7535325949922793354, guid: 0d12a7909e2be6c4da855f8caf7fe11a, type: 3}
+--- !u!114 &1657135311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1657135303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.PlayerInput
+  m_Actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: 
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &1821152460
 GameObject:
   m_ObjectHideFlags: 0
