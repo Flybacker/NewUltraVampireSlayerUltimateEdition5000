@@ -1,5 +1,4 @@
 using System.Collections;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -17,6 +16,8 @@ public class Movement : MonoBehaviour
     [SerializeField] float coyoteTime;
 
     [SerializeField] GameObject bullet;
+
+    [SerializeField] Transform cameraTarget;
 
     InputAction movementAction;
     InputAction jumpAction;
@@ -47,6 +48,7 @@ public class Movement : MonoBehaviour
         checkGrounded();
         checkMovement();
         gunFire();
+        cameraTargetController();
         fireCooldown -= Time.deltaTime;
         coyoteTimer -= Time.deltaTime;
     }
@@ -134,6 +136,26 @@ public class Movement : MonoBehaviour
         else
         {
             grounded = false;
+        }
+    }
+
+    void cameraTargetController()
+    {
+        if (movementAction.ReadValue<Vector2>().x == 0 && !inDash)
+        {
+            cameraTarget.position = transform.position;
+        }
+        if (movementAction.ReadValue<Vector2>().x != 0 && !inDash)
+        {
+            cameraTarget.position = transform.position + new Vector3(movementAction.ReadValue<Vector2>().x * 3, 0, 0);
+        }
+        if (movementAction.ReadValue<Vector2>().x == 0 && inDash)
+        {
+            cameraTarget.position = transform.position + new Vector3(lastDirection * 3, 0, 0);
+        }
+        if (movementAction.ReadValue<Vector2>().x != 0 && inDash)
+        {
+            cameraTarget.position = transform.position + new Vector3(movementAction.ReadValue<Vector2>().x * 3, 0, 0);
         }
     }
 }
