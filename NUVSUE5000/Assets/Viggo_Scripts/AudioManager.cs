@@ -3,8 +3,8 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     [Header("Audio Source")]
-    //[SerializeField] AudioSource musicSource;
-    //[SerializeField] AudioSource Ambiance;
+    [SerializeField] AudioSource musicSource;
+    [SerializeField] AudioSource Ambiance;
     [SerializeField] AudioSource SFXSource;
 
     [Header("Audio Clip")]
@@ -13,13 +13,16 @@ public class AudioManager : MonoBehaviour
     public AudioClip Jump;
     public AudioClip Dash;
     public AudioClip Shot;
+    public AudioClip Pickup;
+    public AudioClip enemydeath;
+    public AudioClip explotion;
 
     private void Start()
     {
-        //musicSource.clip = background;
-        //Ambiance.clip = ambiance;
-        //musicSource.Play();
-        //Ambiance.Play();
+        musicSource.clip = background;
+        Ambiance.clip = ambiance;
+        musicSource.Play();
+        Ambiance.Play();
     }
 
     public void playSFX(AudioClip clip)

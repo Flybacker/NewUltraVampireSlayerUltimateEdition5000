@@ -4911,7 +4911,7 @@ GameObject:
   - component: {fileID: 766310931267944394}
   m_Layer: 7
   m_Name: Bullet
-  m_TagString: Untagged
+  m_TagString: enemyDamage
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4948,7 +4948,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   crashParticle: {fileID: 1355982425871157957}
-  trail: {fileID: 766310931267944394}
 --- !u!212 &1704416245477960536
 SpriteRenderer:
   m_ObjectHideFlags: 0
