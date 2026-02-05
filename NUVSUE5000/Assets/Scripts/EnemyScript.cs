@@ -12,18 +12,20 @@ public class EnemyScript : MonoBehaviour
 
     void FixedUpdate()
     {
+        Debug.Log(speed);
         enemyRB.linearVelocityX = speed;
-        if (Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), Vector2.right * Mathf.Abs(speed), 0.6f, layerMask))
+        if (Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), Vector2.right * speed, 0.6f, layerMask))
         {
             speed = speed * -1;
+            Debug.Log("a");
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "enemyDamage")
+        if (collision.CompareTag("enemyDamage"))
         {
-            
+            Destroy(gameObject);
         }
     }
 }
