@@ -16,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] ParticleSystem PlayerWalkingSmoke;
     [SerializeField] ParticleSystem PlayerJumpSmoke;
     [SerializeField] ParticleSystem PlayerDashParticle;
+    [SerializeField] TrailRenderer DashTrail;
 
     [Header("Movement")]
     [SerializeField] float playerSpeed = 6f;
@@ -44,6 +45,8 @@ public class PlayerMovement : MonoBehaviour
         movementAction = playerInput.actions["Move"];
         jumpAction = playerInput.actions["Jump"];
         fireAction = playerInput.actions["Attack"];
+
+        DashTrail.widthMultiplier = 0.0f;
     }
 
     void OnEnable()
@@ -116,6 +119,8 @@ public class PlayerMovement : MonoBehaviour
 
         spriteRenderer.color = Color.red;
 
+        DashTrail.widthMultiplier = 1.0f;
+
         PlayerDashParticle.Play();
 
         yield return new WaitForSeconds(0.15f);
@@ -127,6 +132,9 @@ public class PlayerMovement : MonoBehaviour
         spriteRenderer.color = Color.white;
         playerRB.gravityScale = defaultGravity;
         inDash = false;
+
+        yield return new WaitForSeconds(0.4f);
+        DashTrail.widthMultiplier = 0.0f;
     }
 
     void HandleGunFire()
