@@ -7,6 +7,13 @@ public class EnemyScript : MonoBehaviour
     [SerializeField] Rigidbody2D enemyRB;
     [SerializeField] SpriteRenderer spriteRenderer;
     bool isAlive;
+    AudioManager audioManager;
+
+    private void Awake()
+    {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
+
     void Start()
     {
         isAlive = true;
@@ -31,6 +38,8 @@ public class EnemyScript : MonoBehaviour
             isAlive = false;
             enemyRB.simulated = false;
             enemyCollider.enabled = false;
+            audioManager.playSFX(audioManager.enemydeath);
+            audioManager.playSFX(audioManager.explotion);
             transform.position = transform.position + Vector3.down * 0.75f ;
             transform.rotation = Quaternion.Euler(0,0,70);
             spriteRenderer.color = Color.red;

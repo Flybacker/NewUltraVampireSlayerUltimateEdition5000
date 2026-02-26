@@ -119,6 +119,37 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &9540302
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9540303}
+  m_Layer: 0
+  m_Name: CamTarget
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9540303
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9540302}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &21420843
 GameObject:
   m_ObjectHideFlags: 0
@@ -1027,10 +1058,10 @@ MonoBehaviour:
   groundCheck: {fileID: 2002903476}
   spriteRenderer: {fileID: 592884028}
   bullet: {fileID: 7535325949922793354, guid: 0d12a7909e2be6c4da855f8caf7fe11a, type: 3}
+  cameraTarget: {fileID: 9540303}
   PlayerWalkingSmoke: {fileID: 6850037120543995028, guid: 8cb1617fd8d04c043a11f9d2774c4881, type: 3}
   PlayerJumpSmoke: {fileID: 8389711017444011259, guid: e654168417273ba49a5b93c24fbed4e5, type: 3}
   PlayerDashParticle: {fileID: 1929658418}
-  DashTrail: {fileID: 2126175059}
   playerSpeed: 5
   jumpPower: 15
   dashPower: 100
@@ -1182,7 +1213,6 @@ Transform:
   - {fileID: 2002903477}
   - {fileID: 1905866122}
   - {fileID: 1095567659}
-  - {fileID: 673636762}
   - {fileID: 2126175058}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1443,6 +1473,7 @@ GameObject:
   m_Component:
   - component: {fileID: 673636762}
   - component: {fileID: 673636763}
+  - component: {fileID: 673636764}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -1459,12 +1490,12 @@ Transform:
   m_GameObject: {fileID: 673636761}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.04, y: 0.55, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1574704129}
-  m_Father: {fileID: 592884029}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &673636763
 Animator:
@@ -1488,6 +1519,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &673636764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 673636761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 496d23c317b9006488ee80dd8d70565b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CamFollow
+  cameraTarget: {fileID: 9540303}
+  speed: 0
 --- !u!1 &989055409
 GameObject:
   m_ObjectHideFlags: 0
@@ -5476,11 +5521,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8252290837149003942, guid: e475891b504a9c94cac621c945480d0c, type: 3}
   m_PrefabInstance: {fileID: 7914846343327649200}
   m_PrefabAsset: {fileID: 0}
---- !u!96 &2126175059 stripped
-TrailRenderer:
-  m_CorrespondingSourceObject: {fileID: 6423834336977542593, guid: e475891b504a9c94cac621c945480d0c, type: 3}
-  m_PrefabInstance: {fileID: 7914846343327649200}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2197158190459727620
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5949,6 +5989,8 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 673636762}
+  - {fileID: 9540303}
   - {fileID: 592884029}
   - {fileID: 2862625599170324535}
   - {fileID: 1178381789}

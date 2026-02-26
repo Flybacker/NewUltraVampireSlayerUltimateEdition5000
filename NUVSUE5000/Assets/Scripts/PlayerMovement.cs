@@ -25,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     InputAction movementAction;
     InputAction jumpAction;
     InputAction fireAction;
+    AudioManager audioManager;
 
     bool canDash;
     bool grounded;
@@ -40,6 +41,7 @@ public class PlayerMovement : MonoBehaviour
         movementAction = InputSystem.actions.FindAction("Move");
         jumpAction = InputSystem.actions.FindAction("Jump");
         fireAction = InputSystem.actions.FindAction("Attack");
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
     void Start()
@@ -73,6 +75,7 @@ public class PlayerMovement : MonoBehaviour
         if (jumpAction.WasPressedThisFrame() && grounded)
         {
             PlayerJumpSmoke.Play();
+            audioManager.playSFX(audioManager.Jump);
             playerRB.linearVelocity = new Vector2(playerRB.linearVelocity.x, jumpPower);
             coyoteTimer = 0;
         }
@@ -93,6 +96,7 @@ public class PlayerMovement : MonoBehaviour
     IEnumerator Dash()
     {
         inDash = true;
+        audioManager.playSFX(audioManager.Dash);
         playerRB.gravityScale = 0;
         playerRB.linearVelocity = Vector2.zero;
 
@@ -126,6 +130,7 @@ public class PlayerMovement : MonoBehaviour
             }
 
             Instantiate(bullet, transform.position, rot);
+            audioManager.playSFX(audioManager.Shot);
             fireCooldown = 0.2f;
         }
     }
