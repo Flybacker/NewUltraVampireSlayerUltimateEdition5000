@@ -9,6 +9,7 @@ public class EnemyScript : MonoBehaviour
     [SerializeField] SpriteRenderer spriteRenderer;
     bool isAlive;
     AudioManager audioManager;
+    Animation anim;
 
     private void Awake()
     {
@@ -44,7 +45,8 @@ public class EnemyScript : MonoBehaviour
             transform.position = transform.position + Vector3.down * 0.75f ;
             transform.rotation = Quaternion.Euler(0,0,70);
             spriteRenderer.color = Color.red;
-            timer();
+            anim.Play("Explotion");
+            StartCoroutine(timer());
         }
     }
     IEnumerator timer()
