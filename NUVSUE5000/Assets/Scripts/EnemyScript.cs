@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 public class EnemyScript : MonoBehaviour
 {
@@ -43,6 +44,13 @@ public class EnemyScript : MonoBehaviour
             transform.position = transform.position + Vector3.down * 0.75f ;
             transform.rotation = Quaternion.Euler(0,0,70);
             spriteRenderer.color = Color.red;
+            timer();
         }
     }
+    IEnumerator timer()
+    {
+        yield return new WaitForSeconds(5f);
+        Destroy(gameObject);
+    }
+
 }
