@@ -21,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float jumpPower = 12f;
     [SerializeField] float dashPower = 20f;
     [SerializeField] float coyoteTime = 0.15f;
+    [SerializeField] float iFrames = 0.1f;
 
     InputAction movementAction;
     InputAction jumpAction;
@@ -30,6 +31,8 @@ public class PlayerMovement : MonoBehaviour
     bool canDash;
     bool grounded;
     bool inDash;
+    bool inIFrame;
+    bool canMove = true;
 
     float coyoteTimer;
     float defaultGravity;
@@ -86,8 +89,7 @@ public class PlayerMovement : MonoBehaviour
             canDash = false;
             StartCoroutine(Dash());
         }
-
-        if (!inDash)
+        if (!inDash && canMove)
         {
             playerRB.linearVelocity = new Vector2(moveInput.x * playerSpeed,playerRB.linearVelocity.y);
         }
@@ -173,5 +175,32 @@ public class PlayerMovement : MonoBehaviour
         {
             cameraTarget.position = transform.position + new Vector3(movementAction.ReadValue<Vector2>().x * 3, 0, 0);
         }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer == 9 && !inIFrame)
+        {
+            inIFrame = true;
+            canDash = false;
+            canMove = false;
+            playerRB.linearVelocity = (transform.position - collision.gameObject.transform.position).normalized*10;
+            spriteRenderer.color = Color.darkRed;
+            StartCoroutine(hit());
+        }
+    }
+
+
+    IEnumerator hit()
+    {
+        Time.timeScale = 0.00001f;
+        yield return new WaitForSecondsRealtime(0.5f);
+        Time.timeScale = 1f;
+        spriteRenderer.color = Color.gray;
+        yield return new WaitForSeconds(iFrames / 2);
+        canMove = true;
+        yield return new WaitForSeconds(iFrames/2);
+        inIFrame = false;
+        spriteRenderer.color = Color.white;
     }
 }
