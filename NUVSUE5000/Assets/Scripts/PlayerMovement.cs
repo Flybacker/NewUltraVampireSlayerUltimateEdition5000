@@ -2,8 +2,6 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(PlayerInput))]
 public class PlayerMovement : MonoBehaviour
 {
     [Header("References")]
@@ -11,12 +9,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Collider2D groundCheck;
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] GameObject bullet;
+    [SerializeField] Transform cameraTarget;
 
     [Header("Juice")]
     [SerializeField] ParticleSystem PlayerWalkingSmoke;
     [SerializeField] ParticleSystem PlayerJumpSmoke;
     [SerializeField] ParticleSystem PlayerDashParticle;
-    [SerializeField] TrailRenderer DashTrail;
 
     [Header("Movement")]
     [SerializeField] float playerSpeed = 6f;
@@ -24,7 +22,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float dashPower = 20f;
     [SerializeField] float coyoteTime = 0.15f;
 
-    PlayerInput playerInput;
     InputAction movementAction;
     InputAction jumpAction;
     InputAction fireAction;
@@ -40,42 +37,26 @@ public class PlayerMovement : MonoBehaviour
 
     void Awake()
     {
-        playerInput = GetComponent<PlayerInput>();
-
-        movementAction = playerInput.actions["Move"];
-        jumpAction = playerInput.actions["Jump"];
-        fireAction = playerInput.actions["Attack"];
-
-        DashTrail.widthMultiplier = 0.0f;
+        movementAction = InputSystem.actions.FindAction("Move");
+        jumpAction = InputSystem.actions.FindAction("Jump");
+        fireAction = InputSystem.actions.FindAction("Attack");
     }
 
-    void OnEnable()
+    void Start()
     {
+        defaultGravity = playerRB.gravityScale;
         movementAction.Enable();
         jumpAction.Enable();
         fireAction.Enable();
     }
 
-    void OnDisable()
-    {
-        movementAction.Disable();
-        jumpAction.Disable();
-        fireAction.Disable();
-    }
-
-    void Start()
-    {
-        if (playerRB == null)
-            playerRB = GetComponent<Rigidbody2D>();
-
-        defaultGravity = playerRB.gravityScale;
-    }
 
     void Update()
     {
         CheckGrounded();
         HandleMovement();
         HandleGunFire();
+        cameraTargetController();
 
         fireCooldown -= Time.deltaTime;
         coyoteTimer -= Time.deltaTime;
@@ -95,6 +76,7 @@ public class PlayerMovement : MonoBehaviour
             playerRB.linearVelocity = new Vector2(playerRB.linearVelocity.x, jumpPower);
             coyoteTimer = 0;
         }
+
         // Dash
         else if (jumpAction.WasPressedThisFrame() && canDash && !grounded)
         {
@@ -104,10 +86,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (!inDash)
         {
-            playerRB.linearVelocity = new Vector2(
-                moveInput.x * playerSpeed,
-                playerRB.linearVelocity.y
-            );
+            playerRB.linearVelocity = new Vector2(moveInput.x * playerSpeed,playerRB.linearVelocity.y);
         }
     }
 
@@ -118,8 +97,6 @@ public class PlayerMovement : MonoBehaviour
         playerRB.linearVelocity = Vector2.zero;
 
         spriteRenderer.color = Color.red;
-
-        DashTrail.widthMultiplier = 1.0f;
 
         PlayerDashParticle.Play();
 
@@ -132,29 +109,29 @@ public class PlayerMovement : MonoBehaviour
         spriteRenderer.color = Color.white;
         playerRB.gravityScale = defaultGravity;
         inDash = false;
-
-        yield return new WaitForSeconds(0.4f);
-        DashTrail.widthMultiplier = 0.0f;
     }
 
     void HandleGunFire()
     {
-        if (!fireAction.IsPressed() || fireCooldown > 0 || bullet == null)
-            return;
+        if (fireAction.IsPressed() && fireCooldown <= 0 && bullet != null)
+        {
+            Quaternion rot;
+            if (lastDirection >= 0)
+            {
+                rot = Quaternion.identity;
+            }
+            else
+            {
+                rot = Quaternion.Euler(0, 180, 0);
+            }
 
-        Quaternion rot = lastDirection >= 0
-            ? Quaternion.identity
-            : Quaternion.Euler(0, 180, 0);
-
-        Instantiate(bullet, transform.position, rot);
-        fireCooldown = 0.2f;
+            Instantiate(bullet, transform.position, rot);
+            fireCooldown = 0.2f;
+        }
     }
 
     void CheckGrounded()
     {
-        if (groundCheck == null)
-            return;
-
         bool currentlyGrounded = groundCheck.IsTouchingLayers(1 << 3);
 
         if (currentlyGrounded)
@@ -170,6 +147,26 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             grounded = false;
+        }
+    }
+
+    void cameraTargetController()
+    {
+        if (movementAction.ReadValue<Vector2>().x == 0 && !inDash)
+        {
+            cameraTarget.position = transform.position;
+        }
+        if (movementAction.ReadValue<Vector2>().x != 0 && !inDash)
+        {
+            cameraTarget.position = transform.position + new Vector3(movementAction.ReadValue<Vector2>().x * 3, 0, 0);
+        }
+        if (movementAction.ReadValue<Vector2>().x == 0 && inDash)
+        {
+            cameraTarget.position = transform.position + new Vector3(lastDirection * 3, 0, 0);
+        }
+        if (movementAction.ReadValue<Vector2>().x != 0 && inDash)
+        {
+            cameraTarget.position = transform.position + new Vector3(movementAction.ReadValue<Vector2>().x * 3, 0, 0);
         }
     }
 }
