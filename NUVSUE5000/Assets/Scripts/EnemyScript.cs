@@ -7,9 +7,9 @@ public class EnemyScript : MonoBehaviour
     [SerializeField] LayerMask layerMask;
     [SerializeField] Rigidbody2D enemyRB;
     [SerializeField] SpriteRenderer spriteRenderer;
+    [SerializeField] ParticleSystem EnemyHitParticles;
     bool isAlive;
     AudioManager audioManager;
-    Animation anim;
 
     private void Awake()
     {
@@ -45,7 +45,7 @@ public class EnemyScript : MonoBehaviour
             transform.position = transform.position + Vector3.down * 0.75f ;
             transform.rotation = Quaternion.Euler(0,0,70);
             spriteRenderer.color = Color.red;
-            anim.Play("Explotion");
+            EnemyHitParticles.Play();
             StartCoroutine(timer());
         }
     }

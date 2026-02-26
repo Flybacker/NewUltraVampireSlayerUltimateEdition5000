@@ -112,7 +112,7 @@ MonoBehaviour:
     m_Bits: 8
   enemyRB: {fileID: 5827948474229007799}
   spriteRenderer: {fileID: 6524987736412447968}
-  Explotion: {fileID: 0}
+  EnemyHitParticles: {fileID: 152356288919436138, guid: 1f1ba85d82c570f43aa59982a1b346e8, type: 3}
 --- !u!70 &5515457655263377686
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
