@@ -111,6 +111,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   enemyRB: {fileID: 5827948474229007799}
+  spriteRenderer: {fileID: 6524987736412447968}
 --- !u!70 &5515457655263377686
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

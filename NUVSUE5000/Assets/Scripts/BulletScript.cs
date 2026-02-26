@@ -33,7 +33,7 @@ public class BulletScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == 3)
+        if (collision.gameObject.layer == 3 || collision.gameObject.layer == 16)
         {
             DamageHitbox.enabled = false;
             sprite.enabled = false;
@@ -42,7 +42,6 @@ public class BulletScript : MonoBehaviour
             crashParticle.Play();
             StartCoroutine(timer());
         }
-
     }
 
     IEnumerator timer()

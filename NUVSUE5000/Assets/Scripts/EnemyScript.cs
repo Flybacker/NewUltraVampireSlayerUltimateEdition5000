@@ -5,27 +5,35 @@ public class EnemyScript : MonoBehaviour
     [SerializeField] float speed;
     [SerializeField] LayerMask layerMask;
     [SerializeField] Rigidbody2D enemyRB;
+    [SerializeField] SpriteRenderer spriteRenderer;
+    bool isAlive;
     void Start()
     {
-        
+        isAlive = true;
     }
 
     void FixedUpdate()
     {
-        Debug.Log(speed);
-        enemyRB.linearVelocityX = speed;
-        if (Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), Vector2.right * speed, 0.6f, layerMask))
+        if (isAlive)
         {
-            speed = speed * -1;
-            Debug.Log("a");
+            enemyRB.linearVelocityX = speed;
+            if (Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y), Vector2.right * speed, 0.6f, layerMask))
+            {
+                speed = speed * -1;
+            }
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("enemyDamage"))
+        if (collision.CompareTag("enemyDamage") && isAlive)
         {
-            Destroy(gameObject);
+            isAlive = false;
+            enemyRB.simulated = false;
+            enemyCollider.enabled = false;
+            transform.position = transform.position + Vector3.down * 0.75f ;
+            transform.rotation = Quaternion.Euler(0,0,70);
+            spriteRenderer.color = Color.red;
         }
     }
 }
