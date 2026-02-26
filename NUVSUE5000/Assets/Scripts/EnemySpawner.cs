@@ -15,7 +15,7 @@ public class EnemySpawner : MonoBehaviour
         timer -= Time.deltaTime;
         if (timer < 0)
         {
-            timer = 3;
+            timer = 5;
             Instantiate(enemy, transform.position, transform.rotation);
         }
     }
