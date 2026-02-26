@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] GameObject bullet;
     [SerializeField] Transform cameraTarget;
+    [SerializeField] Animator animator;
 
     [Header("Juice")]
     [SerializeField] ParticleSystem PlayerWalkingSmoke;
@@ -72,7 +73,14 @@ public class PlayerMovement : MonoBehaviour
         Vector2 moveInput = movementAction.ReadValue<Vector2>();
 
         if (moveInput.x != 0)
+        {
             lastDirection = Mathf.Sign(moveInput.x);
+            animator.SetBool("Run", true);
+        }
+        else
+        {
+            animator.SetBool("Run", false);
+        }
 
         // Jump
         if (jumpAction.WasPressedThisFrame() && grounded)
@@ -119,8 +127,10 @@ public class PlayerMovement : MonoBehaviour
 
     void HandleGunFire()
     {
+
         if (fireAction.IsPressed() && fireCooldown <= 0 && bullet != null)
         {
+            animator.SetTrigger("shoot");
             Quaternion rot;
             if (lastDirection >= 0)
             {
