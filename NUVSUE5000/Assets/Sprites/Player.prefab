@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6552578318316848705}
   m_Layer: 11
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -190,12 +190,12 @@ MonoBehaviour:
   bullet: {fileID: 7535325949922793354, guid: 0d12a7909e2be6c4da855f8caf7fe11a, type: 3}
   cameraTarget: {fileID: 0}
   animator: {fileID: 7121471428567676056}
-  spritething: {fileID: 746350116577090568}
+  spriteFlip: {fileID: 6429941200116686292}
   PlayerWalkingSmoke: {fileID: 0}
   PlayerJumpSmoke: {fileID: 989126114331954700}
   PlayerDashParticle: {fileID: 6711484863399385147}
   playerSpeed: 5
-  jumpPower: 20
+  jumpPower: 25
   dashPower: 100
   coyoteTime: 1
   iFrames: 1
@@ -452,6 +452,11 @@ PrefabInstance:
 --- !u!4 &746350116577090568 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2275376991460998711, guid: de8a3193e0d52904ba31c78009b7b9d6, type: 3}
+  m_PrefabInstance: {fileID: 1569594816697147967}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6429941200116686292 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5545038758415286251, guid: de8a3193e0d52904ba31c78009b7b9d6, type: 3}
   m_PrefabInstance: {fileID: 1569594816697147967}
   m_PrefabAsset: {fileID: 0}
 --- !u!95 &7121471428567676056 stripped

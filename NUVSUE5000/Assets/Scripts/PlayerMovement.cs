@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] GameObject bullet;
     [SerializeField] Transform cameraTarget;
     [SerializeField] Animator animator;
+    [SerializeField] GameObject spriteFlip;
 
     [Header("Juice")]
     [SerializeField] ParticleSystem PlayerWalkingSmoke;
@@ -81,6 +83,7 @@ public class PlayerMovement : MonoBehaviour
         {
             animator.SetBool("Run", false);
         }
+        spriteFlip.transform.localScale = new Vector3(lastDirection, 1, 1)*0.5f;
 
         // Jump
         if (jumpAction.WasPressedThisFrame() && grounded)
